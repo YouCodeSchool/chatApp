@@ -2,14 +2,7 @@
 
 class userController{
 
-    // public function getALLEmployees(){
- 
-    //     $empl = new Employee();
-    //     $datas = $empl->getAll();
-
-    //     return $datas;
-        
-    // }
+    
 
     public function addUser(){
         $users = new users();
@@ -23,9 +16,8 @@ class userController{
 
         $result = $users->create($fname,$lname,$email,$Password,$ConfirmPassword);
         
-        
 
-        print_r($result);
+        return $result;
 
     }
 
@@ -36,16 +28,19 @@ class userController{
         $Email = $_POST['Email'];
         $Psw = $_POST['Pass'];
 
-        $checked = $checkUser->checkUsers($Email, $Psw);
 
-        print_r($checked);
+        $checked = $checkUser->checkUsers($Email, $Psw);
+        
+        return $checked;
     }
 
     public function getSelectedUsers(){
         $select = new users();
-        $data = $select->selectUser();
-      
-        return $data;
+        $userSession = $_SESSION['unique_id'];
+
+        $data = $select->selectUser($userSession);
+        
+         return $data;
     }
 
 
@@ -54,7 +49,11 @@ class userController{
 
         $searchTerms = $_POST['seachVAlue'];
 
-        $searchedUser = $userSearchTerm->searchUsers($searchTerms);
+        $userSession = $_SESSION['unique_id'];
+
+        // var_dump($userSession);
+
+        $searchedUser = $userSearchTerm->searchUsers($searchTerms,$userSession);
 
         // echo $searchedUser;
 

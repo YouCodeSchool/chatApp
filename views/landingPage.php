@@ -1,7 +1,11 @@
 <?php
     session_start();
+   
+    if(!isset($_SESSION['unique_id'])){
+        header("location: /?page=login");
+    }
     include './views/includes/header.inc.php';
-    
+
     include './autoload.php';
 
     $userData = new userController();
@@ -9,21 +13,15 @@
     $data = $userData->getSelectedUsers();
     $numRows = $data->num_rows;
 
-// 
 ?>
 
 
 <body>
 
-<?php
 
-
-
-
-?>
     
     <div class="min-h-screen bg-gray-200 flex justify-center items-center">
-        <div class=" sm:w-4/6 md:max-w-lg rounded bg-white shadow-2xl   rounded-3xl ">
+        <div class=" sm:w-4/6 md:max-w-lg rounded bg-white shadow-2xl rounded-3xl ">
             <div class="flex justify-between w-full items-center relative" id="containerBarMess">
                 <form class="w-10/12 right-0 h-full absolute flex items-center hidden" id="searchbar">
                     <input type="text" class="w-10/12 py-4 rounded-xl outline-none border-2 focus:border-lime-500 px-4" placeholder="Search For users Here" id="search" name="seachVAlue">
@@ -32,27 +30,34 @@
                     <i class="fas fa-search text-gray-300 cursor-pointer" id="searchIcon"></i>
                 </div>
                 <h1 class="">Messages</h1>
-                <div class="w-14 rounded-full bg-purple-500 h-14 m-2">
-                    <img src="#">
+                <div class="w-14 rounded-full bg-purple-500 h-14 m-2 relative">
+                    <?php 
+                        if($numRows > 0){
+                            $rows = $data->fetch_assoc();
+                        }
+                    ?>
+                    <div class="w-3 h-3 bg-green-500 rounded-full absolute left-12 top-2"></div>
+                    <img src="<?php echo "/userImage/". $rows['img']?>" class="w-14 h-14 rounded-full object-cover">
                 </div>
             </div>
             <div class="w-full bg-gray-100 h-40 overflow-x-auto overflow-y-hidden scrollbar" id="">
                 <h3 class="p-4 font-poppinsSans text-gray-300">Stories</h3>
                 
                 <div class="flex justify-center items-center space-x-6" id="stories">
-                
-
+                  
                 </div>
             </div>
 
-            <div class="overflow-auto h-96 scrollbar">
+            <div class="overflow-auto h-96 scrollbar" id="container">
                 <!-- /////////////////////////////////////// -->
                     <?php
                         if($numRows > 0){
                             while($res = $data->fetch_assoc()){
                                 // print_r($res);
+                            
+                            
                     ?>
-                <div class="w-full h-32 bg-gray-200 mt-2 flex items-center relative cursor-pointer" id="chatMode">
+                <div class="w-full h-32 bg-gray-200 mt-2 flex items-center relative cursor-pointer" id="chatMode" <?php echo 'onclick="redirectionMessages('.$res['unique_id'].')"'?>>
                     <div class="flex justify-between space-x-4 ">
                         <div class="sm:ml-4 w-20 h-20 bg-blue-400 rounded-full ml-10 ">
                             <img src="<?php echo "../userImage/". $res['img'] ?>" class="w-20 h-20 object-cover rounded-full">
@@ -76,7 +81,7 @@
             </div>
 
 
-            <div class="h-20 flex items-center justify-center space-x-8">
+            <div class="h-20 flex items-center justify-center space-x-4">
                 <div class="flex flex-col items-center  w-2/12">
                     <i class="fas fa-comments text-2xl text-gray-400"></i>
                     <a href="" class="cursor-pointer font-openSans pt-1">Messages</a>

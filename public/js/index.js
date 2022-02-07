@@ -2,11 +2,6 @@
 // const click = document.getElementById('click')
 const form = document.getElementById('form')
 const registerBtn = document.getElementById('registerBtn')
-const moveBack = document.getElementById('moveBack')
-
-moveBack.onclick = ()=> {
-    location.assign('/?page=landingPage')
-}
 
 form.addEventListener('submit', (e)=>{
         e.preventDefault()
@@ -35,3 +30,4 @@ registerBtn.addEventListener('click',()=> {
     let messageForm = new FormData(form)
     req.send(messageForm)
 })
+

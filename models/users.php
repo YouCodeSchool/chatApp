@@ -1,10 +1,7 @@
 <?php
 
-
 class users extends Db{
-  
-
-
+    
     public function create($fname,$lname,$email,$Password,$ConfirmPassword){  
 
         if(!empty($fname) && !empty($lname) && !empty($email) && !empty($Password) && !empty($ConfirmPassword)){
@@ -39,7 +36,16 @@ class users extends Db{
                                     VALUES ('{$fname}', '{$lname}','{$email}','{$Password}','{$ConfirmPassword}','{$newImgName}','{$status}','{$unique_id}')";
                                     $this->connect()->query($sql);
                                     if($sql){
-                                        echo 'sucess';
+                                        $sql3 = "SELECT * FROM `userregisters` WHERE email = '{$email}'";
+                                        $querys = $this->connect()->query($sql3);
+                                        $rowsNum = $querys->num_rows;
+
+                                        if($rowsNum){
+                                            $row = $querys->fetch_assoc();
+                                            $_SESSION['unique_id'] = $row['unique_id'];
+                                            echo 'sucess';
+                                        }
+
                                     }else {
                                         echo 'failed';
                                     }
@@ -79,11 +85,14 @@ class users extends Db{
 
             if($numRow > 0){
                 $result = $query->fetch_assoc();
+                
                 $statusLog = "Active Now";
 
-                $sql2 = "UPDATE `users` set status = '{$statusLog}' WHERE id = '{$result['id']}'";
+                
+                $sql2 = "UPDATE `users` set status = '{$statusLog}' WHERE unique_id = '{$result['unique_id']}'";
                 $this->connect()->query($sql2);
                 if($sql2){
+                    $_SESSION['unique_id'] = $result['unique_id'];
                     echo 'sucess';
                 }else {
                     echo 'failed';
@@ -103,33 +112,23 @@ class users extends Db{
 
 
     
-    public function selectUser(){
-        $sql3 = "SELECT * FROM `users`";
+    public function selectUser($unique_id){
+        $sql3 = "SELECT * FROM `users` WHERE NOT unique_id = '{$unique_id}'";
         $query = $this->connect()->query($sql3);
 
         return $query;
 
     }
 
-    public function searchUsers($searchTerm){
+    public function searchUsers($searchTerm,$unique_id){
         // $searchTerm = $_POST['searchTerm'];
-        $sqls = "SELECT * FROM `users` WHERE fname LIKE '%{$searchTerm}%' OR lname LIKE '%{$searchTerm}%'";
+        $sqls = "SELECT * FROM `users` WHERE NOT unique_id = '{$unique_id}' AND (fname LIKE '%{$searchTerm}%' OR lname LIKE '%{$searchTerm}%')";
         $query1 = $this->connect()->query($sqls);
 
-        $rows = $query1->num_rows;
-        $output = '';
-
         
-
-        if($rows > 0){
-            $output = 'user is found';
-        }else {
-            $output = 'user not found';
-        }
-
-        return $output;
+        return $query1;
     }
-
+    
 
 
 

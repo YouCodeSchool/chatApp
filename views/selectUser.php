@@ -1,8 +1,13 @@
 <?php
+    session_start();
 
-$userData = new userController();
+    include 'autoload.php';
 
-$data = $userData->getSelectedUsers();
+    $userData = new userController();
+
+    $data = $userData->getSelectedUsers();
+    
+    
 
 
 ?>

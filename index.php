@@ -9,9 +9,9 @@
     
     // $home->index()
 
-    $page = ['home','delete','landingPage','update',
+    $page = ['home','userData','landingPage','update',
     'sendUsers','login','getUsers','stories','messages'
-    ,'search'
+    ,'search','selectUser','sendMessage','getMessages'
 ];
 
     if(isset($_GET['page'])){
