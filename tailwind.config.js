@@ -1,6 +1,7 @@
 module.exports = {
   content: [ 
-    './views/*.{html,css,js,php}'
+    './views/*.{html,css,js,php}',
+    './controllers/*.{html,css,js,php}',
   ],
   theme: {
     extend: {

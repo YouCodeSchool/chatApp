@@ -15,16 +15,20 @@ const chatMode = document.querySelectorAll('#chatMode')
 function redirectionMessages(id){
     let reciver_msg_id = id;
     document.cookie = 'reciver_msg_id=' + reciver_msg_id;
+
     location.assign('/?page=messages')
+
     
 }
 
 
 
 function redirect(e){
-    // location.assign('/?page=messages')
+    let reciver_msg_id = e;
+    document.cookie = 'reciver_msg_id=' + reciver_msg_id;
 
-    console.log(e);
+    location.assign('/?page=messages')
+    // console.log(e);
 }
 
 

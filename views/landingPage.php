@@ -5,13 +5,15 @@
         header("location: /?page=login");
     }
     include './views/includes/header.inc.php';
-
     include './autoload.php';
+
 
     $userData = new userController();
 
     $data = $userData->getSelectedUsers();
     $numRows = $data->num_rows;
+
+    
 
 ?>
 
@@ -21,6 +23,10 @@
 
     
     <div class="min-h-screen bg-gray-200 flex justify-center items-center">
+        <form class="bg-white absolute left-10 flex space-x-5 px-4 py-2 justify-center items-center rounded-xl cursor-pointer invisible" id="logoutContainer">
+            <i class="fas fa-power-off text-gray-400"></i>
+            <h2 class="font-poppinsSans text-gray-400">logout</h2>
+    </form>
         <div class=" sm:w-4/6 md:max-w-lg rounded bg-white shadow-2xl rounded-3xl ">
             <div class="flex justify-between w-full items-center relative" id="containerBarMess">
                 <form class="w-10/12 right-0 h-full absolute flex items-center hidden" id="searchbar">
@@ -29,13 +35,10 @@
                 <div class="w-14 h-10 bg-gray-100 flex justify-center items-center rounded my-2 mx-2" id="searchIconContainer">
                     <i class="fas fa-search text-gray-300 cursor-pointer" id="searchIcon"></i>
                 </div>
-                <h1 class="">Messages</h1>
+                
+                <h1 class="font-poppinsSans">Messages</h1>
                 <div class="w-14 rounded-full bg-purple-500 h-14 m-2 relative">
-                    <?php 
-                        if($numRows > 0){
-                            $rows = $data->fetch_assoc();
-                        }
-                    ?>
+                    
                     <div class="w-3 h-3 bg-green-500 rounded-full absolute left-12 top-2"></div>
                     <img src="<?php echo "/userImage/". $rows['img']?>" class="w-14 h-14 rounded-full object-cover">
                 </div>
@@ -113,6 +116,7 @@
 <script src="../public/js/style.js"></script>
 <script src="../public/js/render.js"></script>
 <script src="../public/js/search.js"></script>
+<script src="../public/js/logout.js"></script>
 </body>
 </html>
 

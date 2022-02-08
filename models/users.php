@@ -113,7 +113,7 @@ class users extends Db{
 
     
     public function selectUser($unique_id){
-        $sql3 = "SELECT * FROM `users` WHERE NOT unique_id = '{$unique_id}'";
+        $sql3 = "SELECT * FROM `users` WHERE unique_id = '{$unique_id}'";
         $query = $this->connect()->query($sql3);
 
         return $query;
@@ -128,8 +128,20 @@ class users extends Db{
         
         return $query1;
     }
-    
 
+    public function logoutUser($unique_id_logout){
+
+        $statusLogout = 'Offline now';
+
+        $sql5 = "UPDATE `users` SET status = '{$statusLogout}' WHERE unique_id = '{$unique_id_logout}'";
+
+        $query5 = $this->connect()->query($sql5);
+
+        return $query5;
+
+    }
+    
+  
 
 
 

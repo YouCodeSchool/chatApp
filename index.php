@@ -11,7 +11,7 @@
 
     $page = ['home','userData','landingPage','update',
     'sendUsers','login','getUsers','stories','messages'
-    ,'search','selectUser','sendMessage','getMessages'
+    ,'search','selectUser','sendMessage','getMessages','logout'
 ];
 
     if(isset($_GET['page'])){

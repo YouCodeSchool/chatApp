@@ -60,6 +60,18 @@ class userController{
         return $searchedUser;
 
     }
+  
+
+    public function getLoginOutUser(){
+        $Userlogout = new users();
+
+        $userLoginSession = $_SESSION['unique_id'];
+
+        $logout = $Userlogout->logoutUser($userLoginSession);
+        return $logout;
+
+
+    }
 
 
 

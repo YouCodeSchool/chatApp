@@ -23,6 +23,14 @@ class msg extends Db {
 
 
     }
+    public function sendReciverMsg($msg_sender_unique_id){
+        $sql2 = "SELECT * FROM `users` WHERE unique_id = '{$msg_sender_unique_id}'";
+        $query2 = $this->connect()->query($sql2);
+
+        return $query2;
+    }
+
+   
 
 
 

@@ -6,6 +6,22 @@
     }
     include 'autoload.php';
     include './views/includes/header.inc.php';
+
+
+    
+    $msg = new msgController();
+
+    $data = $msg->getReciverMessage();
+
+    // $numRows = $data->num_rows;
+    $rows = $data->fetch_assoc();
+
+    
+
+
+
+
+
 ?>
 
 
@@ -25,12 +41,14 @@
                 <!-- <div class="flex"> -->
                     <div class="h-14 flex items-center ">
                         <div class="w-12 h-12 rounded-full bg-purple-300">
-                            <img src="" class="w-12 h-12 rounded-full">
+                            <img src="<?php echo "/userImage/". $rows['img']?>" class="w-12 h-12 rounded-full">
                         </div>
+                        
                         <div class="ml-4">
-                            <h3>Name Here</h3>
-                            <h4>Active Now</h4>
+                            <h3 class="font-poppinsSans "><?php echo $rows['fname']?></h3>
+                            <h4 id="status" class="font-poppinsSans text-[#5fdba7]"><?php echo $rows['status'] ?></h4>
                         </div>
+                        
                     </div>
                 <!-- </div> -->
                 <div class="w-52 flex items-center h-14 justify-end">
@@ -43,28 +61,19 @@
                 </div>
             </div>
 
-            <div class="bg-blue-200 mt-4 h-96 overflow-auto scrollbar" id="messagesContainer">
-                <div class="bg-gray-200 h-auto bg-purple-500 w-2/4 rounded-tl-3xl rounded-r-3xl mb-2 ml-1">
-                    <h2 class="py-2 px-4">heloo helo heloe heleo hello hellmsmso</h2>
-                </div>
-                <div class="bg-gray-200 h-auto bg-purple-500 w-2/4 rounded-br-3xl rounded-l-3xl mb-2 ml-auto mr-2">
-                    <h2 class="py-2 px-4">heloo helo heloe heleo hello hellmsmso</h2>
-                </div>
+            <div class=" mt-4 h-96 w-auto overflow-auto scrollbar " id="messagesContainer">
                 
-                
-                <!-- //////////////// -->
-
-                
+            
             </div>
             <div class="bg-white h-20 flex items-center space-x-6">
                 <div class="w-12 h-12 bg-gray-200 flex items-center justify-center ml-4 rounded ">
                     <i class="fas fa-upload text-gray-400"></i>
                 </div>
                 <form action="" id="messageForm">
-                    <input type="text" class="w-80 h-12 outline-none  focus:border-2 border-lime-500 rounded px-2" placeholder="Message Here" name="Message">
+                    <input type="text" class="w-80 h-12 outline-none  focus:border-2 border-lime-500 rounded px-2" placeholder="Message Here" name="Message" id="message">
                 </form>
 
-                <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center cursor-pointer">
+                <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center cursor-pointer ml-2">
                     <i class="fas fa-paper-plane text-xl" id="sendMessage"></i>
                 </div>
             </div>
